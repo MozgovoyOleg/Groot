@@ -166,6 +166,11 @@ void SidepanelMonitor::on_Connect()
         bool failed = false;
         if( !address.isEmpty() )
         {
+            if(!_connection_address_pub.empty())
+            {
+                _zmq_subscriber.disconnect(_connection_address_pub.c_str());
+            }
+
             _connection_address_pub = "tcp://" + address.toStdString() + std::string(":1666");
             _connection_address_req = "tcp://" + address.toStdString() + std::string(":1667");
             try{
